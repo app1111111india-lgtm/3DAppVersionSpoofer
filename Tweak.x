@@ -73,7 +73,7 @@ static void loadPrefs() {
 			currentiOSSpoofedVersion = @"預設";
 		}
 
-	    UIAlertController* alertController = [UIAlertController alertControllerWithTitle:@"3DAppVersionSpoofer"
+	    UIAlertController* alertController = [UIAlertController alertControllerWithTitle:@"3DAppVersionSpoofer_FF"
 																	message:[NSString stringWithFormat:@"警告：這可能會導致您的 App 出現非預期的行為。\nBundle ID：%@\n目前偽裝版本：%@\n目前偽裝 iOS 版本：%@\n預設 App 版本：%@\n\n請問您想要偽裝的版本號是？\n\n\n",bundleID,currentVer,currentiOSSpoofedVersion,appDefaultVersion]
 																	preferredStyle:UIAlertControllerStyleAlert];
 

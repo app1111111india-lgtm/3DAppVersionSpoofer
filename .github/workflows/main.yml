@@ -1,6 +1,5 @@
 name: Build iOS Tweak
 
-# 觸發條件：當推送到 main 或 master 分支，或是手動觸發時
 on:
   push:
     branches: [ main, master ]
@@ -29,9 +28,9 @@ jobs:
           git clone https://github.com/theos/sdks.git $THEOS/sdks
 
       - name: 🧩 Install AltList Dependency
-        # 改從 Chariz 官方源下載最新版 AltList
+        # 改從原作者的個人 GitHub 源直接下載，保證不會被擋
         run: |
-          wget -qO altlist.deb "https://api.chariz.com/api/v1/package/com.opa334.altlist/download"
+          wget -qO altlist.deb "https://opa334.github.io/debs/com.opa334.altlist_1.0.10_iphoneos-arm.deb"
           dpkg-deb -x altlist.deb altlist_out
           cp -r altlist_out/Library/Frameworks/AltList.framework $THEOS/lib/
           mkdir -p $THEOS/include/AltList

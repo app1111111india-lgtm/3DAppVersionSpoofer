@@ -25,7 +25,7 @@ static void loadPrefs() {
 	NSMutableArray *editedItems = [NSMutableArray arrayWithArray:shortcutItems ? : @[]];
 	if (![self.icon isKindOfClass:%c(SBFolderIcon)] && ![self.icon isKindOfClass:%c(SBWidgetIcon)]) { 
 		SBSApplicationShortcutItem *shortcutItems = [[%c(SBSApplicationShortcutItem) alloc] init];
-		shortcutItems.localizedTitle = @"Spoof App Version";
+		shortcutItems.localizedTitle = @"偽裝 App 版本";
 		shortcutItems.type = SPOOF_VER_TWEAK_BUNDLE;
 		NSData *imgData = UIImagePNGRepresentation([UIImage imageNamed:TDAVS_ASSET_DARK]);
 		//dark mode check
@@ -66,20 +66,20 @@ static void loadPrefs() {
 		UISwitch *experimentalSpoofSwitch = [[UISwitch alloc] init];
 
 		if (currentVer == nil || [currentVer isEqualToString:@"0"]) {
-			currentVer = @"Default";
+			currentVer = @"預設";
 		}
 
 		if (currentiOSSpoofedVersion == nil || [currentiOSSpoofedVersion isEqualToString:@"0"]) {
-			currentiOSSpoofedVersion = @"Default";
+			currentiOSSpoofedVersion = @"預設";
 		}
 
 	    UIAlertController* alertController = [UIAlertController alertControllerWithTitle:@"3DAppVersionSpoofer"
-																	message:[NSString stringWithFormat:@"WARNING: This can cause unexpected behavior in your app.\nBundle ID: %@\nCurrent Spoofed Version: %@\nCurrent Spoofed iOS Version: %@\nDefault App Version: %@\n\nWhat is the version number you want to spoof?\n\n\n",bundleID,currentVer,currentiOSSpoofedVersion,appDefaultVersion]
+																	message:[NSString stringWithFormat:@"警告：這可能會導致您的 App 出現非預期的行為。\nBundle ID：%@\n目前偽裝版本：%@\n目前偽裝 iOS 版本：%@\n預設 App 版本：%@\n\n請問您想要偽裝的版本號是？\n\n\n",bundleID,currentVer,currentiOSSpoofedVersion,appDefaultVersion]
 																	preferredStyle:UIAlertControllerStyleAlert];
 
 		[alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-			if ([currentVer isEqualToString:@"Default"]) {
-				textField.placeholder = @"Enter Version Number"; 
+			if ([currentVer isEqualToString:@"預設"]) {
+				textField.placeholder = @"輸入版本號"; 
 			} else {
 				textField.text = currentVer;
 			}
@@ -88,8 +88,8 @@ static void loadPrefs() {
 		}];
 
 		[alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-			if ([currentiOSSpoofedVersion isEqualToString:@"Default"]) {
-				textField.placeholder = @"Enter iOS Version (Optional)"; 
+			if ([currentiOSSpoofedVersion isEqualToString:@"預設"]) {
+				textField.placeholder = @"輸入 iOS 版本（選填）"; 
 			} else {
 				textField.text = currentiOSSpoofedVersion;
 			}
@@ -97,7 +97,7 @@ static void loadPrefs() {
 			textField.keyboardType = UIKeyboardTypeDecimalPad;
 		}];
 
-		UIAlertAction *setNewValue = [UIAlertAction actionWithTitle:@"Set Spoofed Version" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+		UIAlertAction *setNewValue = [UIAlertAction actionWithTitle:@"設定偽裝版本" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
 			NSString *spoofedAppVersion = ([[alertController textFields][0] text].length > 0) ? [[alertController textFields][0] text] : prefPlist[bundleID] ? prefPlist[bundleID] : @"0";
 			NSString *spoofediOSVersion = ([[alertController textFields][1] text].length > 0) ? [[alertController textFields][1] text] : @"0";
 			//support regions that have comma instead of dot 0-0
@@ -126,7 +126,7 @@ static void loadPrefs() {
 		[alertController.view addSubview:experimentalSpoofSwitch];
 
 		UILabel *switchLabel = [[UILabel alloc] init];
-		switchLabel.text = @"EXPERIMENTAL SPOOFING";
+		switchLabel.text = @"實驗性偽裝功能";
 		switchLabel.numberOfLines = 0;
 		switchLabel.textAlignment = NSTextAlignmentLeft;
 		switchLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
@@ -141,7 +141,7 @@ static void loadPrefs() {
 		NSLayoutConstraint *labelCenterYConstraint = [NSLayoutConstraint constraintWithItem:switchLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:experimentalSpoofSwitch attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
 		[alertController.view addConstraints:@[leadingConstraint, topConstraint, labelLeadingConstraint, labelCenterYConstraint]];
 
-		UIAlertAction *setDefaultValue = [UIAlertAction actionWithTitle:@"Reset to Default Version" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+		UIAlertAction *setDefaultValue = [UIAlertAction actionWithTitle:@"重置為預設版本" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
 			//0 means use original version!
 			CGFloat defaultValue = 0.0f;
 			NSNumber *numberFromFloat = [NSNumber numberWithFloat:defaultValue];
@@ -159,7 +159,7 @@ static void loadPrefs() {
 		}];
 		[alertController addAction:setDefaultValue];
 
-		UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style: UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}];
+		UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style: UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}];
 
 		[alertController addAction:cancelAction];
 

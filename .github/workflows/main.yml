@@ -1,5 +1,6 @@
 name: Build iOS Tweak
 
+# 觸發條件：當推送到 main 或 master 分支，或是手動觸發時
 on:
   push:
     branches: [ main, master ]
@@ -28,10 +29,11 @@ jobs:
           git clone https://github.com/theos/sdks.git $THEOS/sdks
 
       - name: 🧩 Install AltList Dependency
-        # 改從原作者的個人 GitHub 源直接下載，保證不會被擋
         run: |
           wget -qO altlist.deb "https://opa334.github.io/debs/com.opa334.altlist_1.0.10_iphoneos-arm.deb"
           dpkg-deb -x altlist.deb altlist_out
+          # ✂️ 魔法指令：把舊版的 arm64e 切除，讓編譯器不再報錯
+          lipo altlist_out/Library/Frameworks/AltList.framework/AltList -remove arm64e -output altlist_out/Library/Frameworks/AltList.framework/AltList
           cp -r altlist_out/Library/Frameworks/AltList.framework $THEOS/lib/
           mkdir -p $THEOS/include/AltList
           cp -r altlist_out/Library/Frameworks/AltList.framework/Headers/* $THEOS/include/AltList/

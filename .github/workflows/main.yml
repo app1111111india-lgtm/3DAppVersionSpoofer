@@ -26,6 +26,7 @@ jobs:
           git clone --recursive https://github.com/theos/theos.git $THEOS
           rm -rf $THEOS/sdks
           git clone https://github.com/theos/sdks.git $THEOS/sdks
+          curl -sL https://raw.githubusercontent.com/RootHide/Developer/main/roothide.h -o $THEOS/include/roothide.h
 
       - name: 🔨 Build Tweak
         run: make package FINALPACKAGE=1
